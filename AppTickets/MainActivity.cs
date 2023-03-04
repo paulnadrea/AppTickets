@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Widget;
@@ -31,19 +32,44 @@ namespace AppTickets
 
         private void BtnRegistrar_Click(object sender, System.EventArgs e)
         {
-            throw new System.NotImplementedException();
+            Intent i = new Intent(this, typeof(RegistrarUsuario));
+            StartActivity(i);
         }
 
         private void BtnIngresar_Click(object sender, System.EventArgs e)
         {
-            throw new System.NotImplementedException();
+            try 
+            {
+                Login resultado = null;
+                if (!string.IsNullOrEmpty(txtUsuario.Text.Trim()) && !string.IsNullOrEmpty(txtClave.Text.Trim()))
+                {
+                    resultado = new Auxiliar().SelecionarUno(txtUsuario.Text.Trim(), txtClave.Text.Trim());
+                    if (resultado != null)
+                    {
+                        txtUsuario.Text = resultado.Usuario.ToString();
+                        Toast.MakeText(this, "Login realizado con exito", ToastLength.Short).Show();
+                        var bienvenido = new Intent(this, typeof(Bienvenido));
+                        bienvenido.PutExtra("usuario", FindViewById<EditText>(Resource.Id.txtUsuario).Text);
+                        StartActivity(bienvenido);
+                        Finish();
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "Nombre de usuario y/o clave inválida(s)", ToastLength.Long).Show();
+                    }
+                }
+                else
+                {
+                    Toast.MakeText(this, "Nombre de usuario y/o clave son vacios", ToastLength.Long).Show();
+                }
+
+            }
+            catch 
+            {
+
+            }
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
-        {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+       
     }
 }
