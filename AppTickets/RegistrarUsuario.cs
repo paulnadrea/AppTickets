@@ -20,7 +20,7 @@ namespace AppTickets
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
+            SetContentView(Resource.Layout.RegistrarUsuario);
             txtNuevoUsuario = FindViewById<EditText>(Resource.Id.txtNuevoUsuario);
             txtNuevaClaveUsuario = FindViewById<EditText>(Resource.Id.txtNuevaClaveUsuario);
             btnRegistrarUsuario = FindViewById<Button>(Resource.Id.btnRegistrarUsuarioNuevo);
